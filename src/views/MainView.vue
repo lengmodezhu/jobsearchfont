@@ -5,11 +5,36 @@
                 <el-menu :default-openeds="['1','2']" style="height: 100vh;"
                         background-color="rgb(48,65,86)"
                         text-color="#fff">
-                <div style="height:100px;line-height:100px;text-align:center">
+                <div style="height:100px;line-height:100px;text-align:center;font-size: 30px;font-family: STXingkai;color: white;">
                     <img src="../assets/xiaohui.png" style="width:20px"/>
-                    <b style="color:white">邮电东西</b>
+                    邮电东西
                 </div>
-                <el-submenu index="1">
+
+                <div>
+                <div style="height:40px;line-height:40px;text-align:center"><b style="color:#E9EEF3">信息来源</b></div>
+                <div  style="height:30px;line-height:30px;text-align:center ;color: #E9EEF3;cursor:pointer;"
+                @click="sourceClick(item)" v-for="(item,sindex) in sourceList" :key="sindex">
+                    {{item}}
+                </div>
+
+                <div style="height:10px;line-height:10px;text-align:center"></div>
+                </div>
+
+
+
+
+
+                <div style="height:40px;line-height:40px;text-align:center"><b style="color:white">搜索记录</b></div>
+                <div  style="height:30px;line-height:30px;text-align:center ;color: white;cursor:pointer;"
+                @click="menuClick(item)" v-for="(item,subindex) in historyList" :key="subindex">
+                    {{item}}
+                </div>
+            
+
+
+
+                
+                <!-- <el-submenu index="1">
                     <template slot="title"><i class="el-icon-s-claim"></i>历史搜索</template>
          
                     <el-menu-item @click="menuClick(subindex)" v-for="(item,subindex) in historyList" :key="subindex">{{item}}</el-menu-item>
@@ -17,15 +42,20 @@
 
                 </el-submenu>
         
-                <el-submenu index="2">
+                <el-submenu index="2"  >
                     <template slot="title"><i class="el-icon-s-check"></i>所属网站</template>
-                    <el-menu-item index="不限" >不限</el-menu-item>
+                    <el-menu-item index="不限"  @click="sourceclick">不限</el-menu-item>
                     <el-menu-item index="猎聘">猎聘</el-menu-item>
                     <el-menu-item index="拉勾">拉勾</el-menu-item>
                     <el-menu-item index="智联招聘">智联招聘</el-menu-item>
                     <el-menu-item index="今日招聘">今日招聘</el-menu-item>
                     <el-menu-item index="58同城">58同城</el-menu-item>
-                </el-submenu>
+                </el-submenu> -->
+                
+
+
+
+
                 </el-menu>
 
                    
@@ -309,6 +339,7 @@ import { Result } from 'element-ui';
                 }],
                 jobmain:[],
                 historyList:[],
+                sourceList:['猎聘','拉勾','智联招聘','今日招聘','58同城'],
 
             };
         },
@@ -394,12 +425,21 @@ import { Result } from 'element-ui';
                 console.log(`当前页: ${val}`);
                 this.postToEnd()
             },
+            sourceClick(val){
+                console.log(val);
+                this.pos_source = val;
+                this.postToEnd();
+
+            },
+
             change(e){
                 this.$forceUpdate();
             },
 
             menuClick(val){
-                console.log(`历史搜索 ${val}`)
+                console.log(val);
+                this.search = val;
+                this.postToEnd();
 
             },
 
@@ -440,9 +480,9 @@ import { Result } from 'element-ui';
             },
             scale_paiChange(val){
                 if(this.scale_pai == "↑"){
-                    this.scale_pai = "asc"
+                    this.scalepai = "asc"
                 }else if(this.money_pai == "↓"){
-                    this.scale_pai = "desc"
+                    this.scalepai = "desc"
                 }
                 console.log(`金额排序改 ${this.money_pai}`);
                 this.postToEnd();
